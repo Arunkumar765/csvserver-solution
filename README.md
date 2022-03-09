@@ -1,3 +1,4 @@
+Install docker and docker-compose.
 Check docker and docker-compose version,
 ```sh
 docker version
