@@ -1,92 +1,47 @@
-Check docker and docker-compose version
-```sh
+Check docker and docker-compose version,
 docker version
 docker-compose version
-```
 
-Pull the below docker images:
-```sh
+Pull the below docker images,
 docker pull infracloudio/csvserver:latest
 docker pull prom/prometheus:v2.22.0
-```
 
-Clone the repo:
-```sh
-git clone https://github.com/infracloudio/csvserver.git
-```
-
-5. List docker images:
-```sh
+List docker images using below command,
 docker images
-```
 
-6. Run the docker container:
-```sh
-docker run -d -i infracloudio/csvserver:latest
-```
+Run the docker container:
+docker run -itd infracloudio/csvserver
 
-7. Check if the docker container is running or not.
-```sh
+Check whether the docker container is running or not.
 docker ps
-```
 
-8. If the docker container is not running, check the status
-```sh
+If the docker container is not running, check the status using below command
 docker ps -a
-```
 
-9. Check the logs and see what is the error:
-```sh
-docker logs 33f2890edfa6
-2021/09/21 08:21:37 error while reading the file "/csvserver/inputdata": open /csvserver/inputdata: no such file or directory
-```
+Check the logs and see what is the error:
+docker logs "container ID"
 
-10. Create a shell script to create the inputFile
-```sh
+Below is the shell script to create the inputFile
 #!/bin/bash
 count=1
 while [ $count -lt 11 ]
 do
-rand=$((RANDOM%100))
-echo "$count, $rand" >> inputFile
+random=$((RANDOM%1000000))
+echo "$count, $random" >> inputFile
 count=$(($count+1))
 done
-```
 
-11. Run the cotainer by mouting the inputfile path
-```sh
-docker run -d -i -v /home/ec2-user/project/csvserver/inputFile:/csvserver/inputdata infracloudio/csvserver:latest
-```
+Run the cotainer by mouting the inputfile path
+docker run -itd -v /root/csvserver/solution/inputFile:/csvserver/inputdata "IMAGENAME"
 
-12. Login to the container
-```sh
-docker exec -it <container-id> bash
-```
+Login to the container using below command,
+docker exec -it <container ID> bash
 
-13. Check the port
-```sh
-netstat -tulnp
-Active Internet connections (only servers)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp6       0      0 :::9300                 :::*                    LISTEN      1/csvserver
-```
+Check the port is running on the container
+netstat -tulpn
 
-14. Stop the running container
-```sh
-docker stop <container-id>
-```
-
-15. Run the container and provide the port mapping
-```sh
-docker run -d -i -v /home/ec2-user/project/csvserver/inputFile:/csvserver/inputdata -p 9393:9300 infracloudio/csvserver:latest
-```
-
-16. Stop the container 
-```sh
-docker stop <container-id>
-```
-
-17. Run again by specifying the environment variable
-```sh
-docker run -d -i -v /home/ec2-user/project/csvserver/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER='Orange' infracloudio/csvserver:latest
-```
+Stop the running container
+docker stop <container ID>
+  
+Run the container by mapping the port and setting environment variable,
+docker run -itd -v /root/csvserver/solution/inputFile:/csvserver/inputdata -p 9393:9300 "IMAGENAME"
