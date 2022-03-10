@@ -69,5 +69,5 @@ docker stop <container ID>
   
 Run the container by mapping the port and setting environment variable,
 ```sh
-docker run -itd -v /root/csvserver/solution/inputFile:/csvserver/inputdata -p 9393:9300 "IMAGENAME"
+docker run -itd -v /root/csvserver/solution/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER='Orange' "IMAGENAME"
 ```
